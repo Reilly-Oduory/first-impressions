@@ -1,9 +1,5 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block styles%}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-{% endblock %}
-
-{% block Content %}
-    {% include 'landing-area.html' %}
+{% block navbar %}
+    {% include 'navbar.html' %}
 {% endblock %}

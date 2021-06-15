@@ -21,6 +21,7 @@ class Pitch(db.Model):
     upvotes = db.Column(db.Integer)
     downvotes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    comments = db.relationship('Comment', backref = 'comment', lazy = "dynamic")
 
     def __repr__(self):
         return f'Pitch {self.title}'
@@ -63,6 +64,9 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+    def get_id(self):
+           return (self.user_id)
+
     @property
     def password(self):
         raise AttributeError('You cannot raise the password attribute')
@@ -92,9 +96,13 @@ class Comment(db.Model):
     title = db.Column(db.String)
     comment_content = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
 
     def __repr__(self):
         return f'Comment {self.title}'
+
+    def get_id(self):
+           return (self.comment_id)
 
     def __init__(self, title, comment_content):
         self.title = title
