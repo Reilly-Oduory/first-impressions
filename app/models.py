@@ -50,6 +50,12 @@ class Pitch(db.Model):
         return pitches
 
     @classmethod
+    def get_selected_pitches(cls,id):
+        user_pitches = Pitch.query.filter_by(id = id).all()
+
+        return user_pitches
+    
+    @classmethod
     def get_user_pitches(cls,id):
         user_pitches = Pitch.query.filter_by(user_id = id).all()
 
@@ -119,3 +125,7 @@ class Comment(db.Model):
         comments = Comment.query.filter_by(id = id).all()
         
         return comments
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
