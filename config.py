@@ -1,7 +1,7 @@
-from logging import DEBUG
+import os
 
 class Config:
-    pass
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5433/firstimpression'
 
 class ProdConfig(Config):
     pass
