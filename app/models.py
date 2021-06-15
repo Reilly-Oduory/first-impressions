@@ -49,6 +49,12 @@ class Pitch(db.Model):
         
         return pitches
 
+    @classmethod
+    def get_user_pitches(cls,id):
+        user_pitches = Pitch.query.filter_by(user_id = id).all()
+
+        return user_pitches
+
 
 class User(UserMixin, db.Model):
 
@@ -58,8 +64,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String, index = True)
     email = db.Column(db.String, unique = True, index = True)
     pass_secure = db.Column(db.String(255))
-    comments = db.relationship('Comment', backref = 'comment', lazy = "dynamic")
-    pitches = db.relationship('Pitch', backref = 'pitch', lazy = "dynamic")
+    comments = db.relationship('Comment', backref = 'user', lazy = "dynamic")
+    pitches = db.relationship('Pitch', backref = 'user', lazy = "dynamic")
 
     def __repr__(self):
         return f'User {self.username}'
@@ -107,3 +113,9 @@ class Comment(db.Model):
     def __init__(self, title, comment_content):
         self.title = title
         self.comment_content = comment_content
+
+    @classmethod
+    def get_comments(cls, id):
+        comments = Comment.query.filter_by(id = id).all()
+        
+        return comments
