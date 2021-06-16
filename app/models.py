@@ -21,13 +21,14 @@ class Pitch(db.Model):
     upvotes = db.Column(db.Integer)
     downvotes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    comments = db.relationship('Comment', backref = 'comment', lazy = "dynamic")
+    comments = db.relationship('Comment', backref = 'pitch', lazy = "dynamic")
 
     def __repr__(self):
         return f'Pitch {self.title}'
 
 
-    def __init__(self,title,category,content,date_created,upvotes = 0,downvotes = 0):
+    def __init__(self,user_id, title,category,content,date_created,upvotes = 0,downvotes = 0):
+        self.user_id = user_id
         self.title = title
         self.category = category
         self.content = content
@@ -51,9 +52,9 @@ class Pitch(db.Model):
 
     @classmethod
     def get_selected_pitches(cls,id):
-        user_pitches = Pitch.query.filter_by(id = id).all()
+        selected_pitches = Pitch.query.filter_by(id = id).first()
 
-        return user_pitches
+        return selected_pitches
     
     @classmethod
     def get_user_pitches(cls,id):
@@ -116,13 +117,15 @@ class Comment(db.Model):
     def get_id(self):
            return (self.comment_id)
 
-    def __init__(self, title, comment_content):
+    def __init__(self,user_id,pitch_id, title, comment_content):
+        self.user_id = user_id
+        self.pitch_id = pitch_id
         self.title = title
         self.comment_content = comment_content
 
     @classmethod
     def get_comments(cls, id):
-        comments = Comment.query.filter_by(id = id).all()
+        comments = Comment.query.filter_by(pitch_id = id).all()
         
         return comments
 

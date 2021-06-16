@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <div class="containter">
+        <div class="row">
+            <h2><u>{{ pitch.title }}</u></h2>
+            <a href="/pitch/comment/new/{{pitch.id}}">Comment on pitch</a>
+        </div>
+    </div>
+    <div class="comments">
+        {% if comments %}
+            {%for comment in comments%}
+                <div>
+                    <h3>{{comment.title}}</h3>
+                    <p>{{comment.comment_content}}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

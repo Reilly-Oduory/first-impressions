@@ -3,5 +3,18 @@
 {% block content %}
     <div>
         <h6>{{user.username}}</h6>
+        <li><a href="/pitch/new">New Pitch</a></li>
     </div>
+    {% if pitches %}
+        <div>
+            {% for pitch in pitches %}
+                <div>
+                    <h4>{{pitch.title}}</h4>
+                    <p>{{pitch.content}}</p>
+                    <h6>{{pitch.category}}</h6>
+                </div>
+            {% endfor%}
+        </div>
+    {% endif %}
+    
 {% endblock %}

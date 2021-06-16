@@ -3,6 +3,7 @@ from flask_login import login_user, login_required,logout_user
 from . import auth
 from ..models import User
 from .forms import RegistrationForm, LoginForm
+from ..email import mail_message
 
 @auth.route('/login', methods = ["GET","POST"])
 def login():
@@ -26,6 +27,8 @@ def register():
         user = User(username = form.username.data, email = form.email.data, password = form.password.data)
 
         User.save_user(user)
+
+        mail_message("Welcome to FirstImpression","email/welcome_user",user.email,user = user)
         return redirect(url_for('auth.login'))
     title = "New Account"
 
