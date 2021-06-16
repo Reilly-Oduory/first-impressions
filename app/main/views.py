@@ -19,29 +19,32 @@ def index():
 def pickup():
     
     title = 'Pick Up lines Galore'
+    pitches = Pitch.query.filter_by(category = 'pickup').all()
 
-    return render_template('category/pickup.html', title = title)
+    return render_template('category/pickup.html', title = title, pitches = pitches)
 
 @main.route('/category/interview')
 def interview():
 
     title = 'Impress the interviewer guaranteed'
+    pitches = Pitch.query.filter_by(category = 'interview').all()
 
-    return render_template('category/interview.html', title = title)
+    return render_template('category/interview.html', title = title, pitches = pitches)
 
 @main.route('/category/product')
 def product():
 
     title = 'Sell your prduct assurance'
+    pitches = Pitch.query.filter_by(category = 'product').all
 
-    return render_template('category/product.html', title = title)
+    return render_template('category/product.html', title = title, pitches = pitches)
 
 @main.route('/category/business')
 def business():
     
     title = 'Make an incredible business pitch'
-
-    return render_template('category/business.html', title = title)
+    pitches = Pitch.query.filter_by(category = 'business').all()
+    return render_template('category/business.html', title = title, pitches = pitches)
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -58,7 +61,7 @@ def new_pitch():
     form = PitchForm()
     if form.validate_on_submit():
         title = form.title.data
-        content = form.title.data
+        content = form.content.data
         category = form.category.data
         new_pitch = Pitch(current_user.get_id(), title,category,content, date.today())
         new_pitch.save_pitch()
