@@ -1,13 +1,13 @@
 {% macro displayPitches(pitches_arr) %}
     {% for pitch in pitches_arr %}
-        <div class="jumbotron" style="background: transparent; border: solid; border-radius: 10px; border-color: #f0f0f0; border-width: 1px;">
+        <div class="jumbotron" style="background: #fdfdfd; border: solid; border-radius: 10px; border-color: #f0f0f0; border-width: 1px;">
             <div class="container">
                 <a href="/pitch/{{pitch.id}}" class="text-primary"><h1>{{pitch.title}}</h1></a>
             </div>    
                 <hr>
             <div class="container">
                 <p>{{pitch.content}}</p>
-                <h5 class="text-capitalize text-right text-muted">{{pitch.category}}</h5>
+                <h5 class="text-capitalize text-right text-muted"><span class="label label-default">{{pitch.category}}</span></h5>
                 <div class="text-center">
                     <a href="/pitch/comment/new/{{pitch.id}}" class="btn btn-primary">Comment</a>
                 </div>

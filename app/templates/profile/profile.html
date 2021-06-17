@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
-        <h6>{{user.username}}</h6>
-        <li><a href="/pitch/new">New Pitch</a></li>
+    <div class="container">
+        <h1 class="text-center text-warning text-uppercase">{{user.username}}</h1>
+        <a href="/pitch/new" class="btn btn-info center-block">New Pitch</a>
     </div>
+    <hr>
     {% if pitches %}
-        <div>
+        <h1 class="text-center"><span class="label label-success">My Pitches</span></h1>
+        <br>
+        <div class="container">
             {% for pitch in pitches %}
-                <div>
-                    <h4>{{pitch.title}}</h4>
-                    <p>{{pitch.content}}</p>
-                    <h6>{{pitch.category}}</h6>
+                <div class="panel panel-success">
+                    <div class="panel-heading text-uppercase text-center">
+                        <h3 class="panel-title">{{pitch.title}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{pitch.content}}</p>
+                        <h6 class="text-right"><span class="label label-default">{{pitch.category}}</span></h6>
+                    </div>
                 </div>
+                <br>
             {% endfor%}
         </div>
     {% endif %}
