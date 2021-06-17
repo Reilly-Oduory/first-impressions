@@ -2,7 +2,7 @@ from datetime import date
 from . import main
 from flask import render_template,url_for,redirect,request,abort
 from flask_login import login_required, current_user
-import markdown2
+from .. import db
 from ..models import Pitch, User, Comment
 from .forms import PitchForm, CommentForm
 
@@ -35,7 +35,7 @@ def interview():
 def product():
 
     title = 'Sell your prduct assurance'
-    pitches = Pitch.query.filter_by(category = 'product').all
+    pitches = Pitch.query.filter_by(category = 'product').all()
 
     return render_template('category/product.html', title = title, pitches = pitches)
 
@@ -93,3 +93,30 @@ def new_comment(id):
 
     title = 'Comment'    
     return render_template('new_comment.html', comment_form = comment_form, pitch = pitch, title = title)
+
+@main.route('/pitch/upvote/<int:id>', methods=["GET","POST"])
+def like(id):
+    pitch = Pitch.query.filter_by(id = id).first()
+    if pitch is None:
+        abort(404)
+    
+    pitch.upvotes = pitch.upvotes + 1
+    
+    db.session.add(pitch)
+    db.session.commit()
+    return redirect(url_for('main.index'))
+    
+
+@main.route('/pitch/downvote/<int:id>', methods=["GET","POST"])
+def dislike(id):
+    pitch = Pitch.query.filter_by(id = id).first()
+    if pitch is None:
+        abort(404)
+    
+    pitch.downvotes = pitch.downvotes + 1
+    
+    db.session.add(pitch)
+    db.session.commit()
+    return redirect(url_for('main.index'))
+
+    

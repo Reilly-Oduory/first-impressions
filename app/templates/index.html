@@ -1,22 +1,9 @@
 {% extends 'base.html'%}
+{% import 'macros.html' as macro%}
 
 
 {% block content %}
-    <div>
-        <li><a href="/category/pickup">pickup</a></li>
-        <li><a href="/category/interview">interview</a></li>
-        <li><a href="/category/product">product</a></li>
-        <li><a href="/category/business">business</a></li>
-    </div>
-
-    <div>
-        {% for pitch in pitches %}
-            <div>
-                <h1><a href="/pitch/{{pitch.id}}">{{pitch.title}}</a></h1>
-                <p>{{pitch.content}}</p>
-                <h5>{{pitch.category}}</h5>
-                <a href="/pitch/comment/new/{{pitch.id}}">Comment</a>
-            </div>
-        {% endfor %}
-    </div>
+   <div class="container">
+        {{macro.displayPitches(pitches)}}
+   </div>
 {% endblock %}

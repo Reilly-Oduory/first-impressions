@@ -1,5 +1,17 @@
 {% extends 'base.html'%}
 
 {% block content %}
-    <h1> {{title}} </h1>
+     <h1> {{title}} </h1>
+    {% if pitches %}
+        <div>
+            {% for pitch in pitches %}
+                <div>
+                    <h1><a href="/pitch/{{pitch.id}}">{{pitch.title}}</a></h1>
+                    <p>{{pitch.content}}</p>
+                    <h5>{{pitch.category}}</h5>
+                    <a href="/pitch/comment/new/{{pitch.id}}">Comment</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
